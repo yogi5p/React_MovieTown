@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Navbar, Jumbotron, Button } from "react-bootstrap";
 import MovieList from "./MovieList";
+import MovieCards from "./MovieCards";
 
 const MOVIE_URL =
   "https://api.themoviedb.org/3/search/movie?api_key=2434d246ec60c162a86db597467ef4ed&language=en-US&query=alien&include_adult=false&sort_by=created_at.asc&page=1";
@@ -36,8 +37,8 @@ class App extends Component {
         </Navbar>
         <Jumbotron>
           <Grid>
-            <h1>React Movie Town</h1>
-            <MovieList movies={this.state.movies} />
+            <h1>Alien Movie Town</h1>
+            <MovieCards movies={this.state.movies} />
           </Grid>
         </Jumbotron>
       </div>
