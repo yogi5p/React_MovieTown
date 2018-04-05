@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Navbar, Jumbotron, Button } from "react-bootstrap";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import MovieList from "./MovieList";
 import MovieCards from "./MovieCards";
+import MovieDetails from "./MovieDetails";
 
 const MOVIE_URL =
   "https://api.themoviedb.org/3/search/movie?api_key=2434d246ec60c162a86db597467ef4ed&language=en-US&query=alien&include_adult=false&sort_by=created_at.asc&page=1";
@@ -41,6 +43,8 @@ class App extends Component {
             <MovieCards movies={this.state.movies} />
           </Grid>
         </Jumbotron>
+
+        <Route path="/moviedetails" component={MovieDetails} />
       </div>
     );
   }
