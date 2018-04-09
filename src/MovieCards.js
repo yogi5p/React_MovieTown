@@ -6,7 +6,7 @@ class MovieCards extends Component {
   render() {
     return (
       <Grid>
-        <MoviePosterList movies={this.props.movies} />
+        <MoviePosterList openMovieClicked={this.props.openMovieClicked} />
       </Grid>
     );
   }
