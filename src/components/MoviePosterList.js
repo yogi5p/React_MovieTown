@@ -5,7 +5,7 @@ import MovieDetails from "./MovieDetails";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
-  movies: state.movies
+  movies: state.common.movies
 });
 
 const MoviePosterList = ({ movies, openMovieClicked }) => {

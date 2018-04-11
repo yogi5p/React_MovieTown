@@ -4,6 +4,7 @@ import {
   Navbar,
   Jumbotron,
   Nav,
+  Col,
   NavDropdown,
   MenuItem,
   NavItem,
@@ -18,9 +19,11 @@ import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import Movies from "./Movies";
 import MovieDetails from "./MovieDetails";
+import Login from "./Login";
 
+//this.props.typeOfMovies = state.searchTerm from the store
 const mapStateToProps = state => ({
-  typeOfMovies: state.typeOfMovies
+  typeOfMovies: state.common.typeOfMovies
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -31,24 +34,15 @@ class App extends Component {
   //movies -> Movie Component
   //movies/:movieId -> MovieDetails Component
 
-  state = {
-    typeOfMovies: ""
-  };
-
-  componentWillReceiveProps(nextProps) {
-    // fires when component is receiving new props
-    if (nextProps.location.pathname === "/") {
-      this.setState({
-        typeOfMovies: ""
-      });
-    }
-  }
-
-  movieSearchTerm = searchTerm => {
-    this.props.setSearchTerm(searchTerm);
+  movieSearchTerm = typeOfMovies => {
+    this.props.setSearchTerm(typeOfMovies);
     this.props.history.push("/movies");
   };
 
+  movieLogin = () => {
+    //this.props.setSearchTerm(searchTerm);
+    this.props.history.push("/Login");
+  };
   render() {
     return (
       <div style={{ backgroundColor: "lightgray" }}>
@@ -56,10 +50,22 @@ class App extends Component {
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/">Movie Town App</a>
+                <object type="lol/wut">
+                  <a href="/">Movie Town App</a>
+                </object>
               </Navbar.Brand>
 
               <Navbar.Toggle />
+              <LinkContainer to="/Login">
+                <Button
+                  type="submit"
+                  bsStyle="primary"
+                  style={"margin-top = 15px;"}
+                  onClick={() => this.movieLogin()}
+                >
+                  Login
+                </Button>
+              </LinkContainer>
             </Navbar.Header>
             <Nav pullRight>
               <NavItem>
@@ -83,7 +89,7 @@ class App extends Component {
                 placeholder="movie search"
                 value={this.props.typeOfMovies}
                 onChange={event => {
-                  this.setState({ typeOfMovies: event.target.value });
+                  this.props.setSearchTerm(event.target.value);
                 }}
               />
 
@@ -92,7 +98,7 @@ class App extends Component {
                   type="submit"
                   bsStyle="link"
                   style={"margin-top = 15px;"}
-                  onClick={() => this.movieSearchTerm(this.state.typeOfMovies)}
+                  onClick={() => this.movieSearchTerm(this.props.typeOfMovies)}
                 >
                   Search
                 </Button>
@@ -107,14 +113,12 @@ class App extends Component {
             {this.props.typeOfMovies} Movies
           </Grid>
         </Jumbotron>
+        <Route exact path="/Login" component={Login} />
         <Route
           exact
           path="/movies"
           render={props => (
-            <Movies
-              {...props}
-              typeOfMovies={encodeURIComponent(this.state.typeOfMovies)}
-            />
+            <Movies {...props} typeOfMovies={this.props.typeOfMovies} />
           )}
         />
         <Route path="/movies/:movieId" component={MovieDetails} />

@@ -1,29 +1,12 @@
-import React, { Component } from "react";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import { promiseMiddleware } from "./middleware";
+import reducer from "./reducers";
+//import reducer from "./reducers/index" - this statement is same as above
 
-const initalState = {
-  movies: [],
-  searchTerm: ""
-};
-
-export const reducer = (state = initalState, action) => {
-  switch (action.type) {
-    case "NEW_MOVIES":
-      return {
-        ...state,
-        movies: action.payload
-      };
-    case "CREATE_SEARCH_TERM":
-      return {
-        ...state,
-        searchTerm: action.payload
-      };
-    default:
-      return state;
-  }
-};
+//conditional check for PROD rather than dev
+const composeDebug = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeDebug(applyMiddleware(promiseMiddleware))
 );
