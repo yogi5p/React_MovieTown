@@ -68,7 +68,7 @@ class App extends Component {
           movieSearchTerm={this.movieSearchTerm}
         />
         <Jumbotron
-          style={{ marginBottom: "5px", marginTop: "5px", height: "50px" }}
+          style={{ marginBottom: "5px", marginTop: "50px", height: "50px" }}
         >
           <Grid style={{ fontSize: "30px", marginTop: "5px" }}>
             {this.props.typeOfMovies} Movies
