@@ -19,6 +19,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { connect } from "react-redux";
 import Movies from "./Movies";
 import MovieDetails from "./MovieDetails";
+import MovieSearch from "./MovieSearch";
 import Login from "./Login";
 import Signup from "./Signup";
 import NavBar from "./NavBar";
@@ -76,6 +77,17 @@ class App extends Component {
         </Jumbotron>
         <Route exact path="/Login" component={Login} />
         <Route path="/Signup" name="Signup" component={Signup} />
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <MovieSearch
+              {...props}
+              typeOfMovies={this.props.typeOfMovies}
+              token={this.props.token}
+            />
+          )}
+        />
         <Route
           exact
           path="/movies"

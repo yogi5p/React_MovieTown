@@ -45,7 +45,7 @@ class MovieDetails extends Component {
   onFavoriteClick = () => {
     services.Movie.favorite(this.state.movie, this.props.token)
       .then(resp => resp.json())
-      .then(payload => console.log(payload))
+      .then(payload => this.props.history.push("/"))
       .catch(err => console.log(err));
   };
 

@@ -1,5 +1,6 @@
 const initalState = {
   movies: [],
+  favoriteMovies: [],
   typeOfMovies: "",
   userAuthenticated: false,
   user: null,
@@ -12,6 +13,12 @@ export const common = (state = initalState, action) => {
       return {
         ...state,
         movies: action.payload.results.filter(m => m.poster_path),
+        inProgress: false
+      };
+    case "MOVIE_FAVORITES":
+      return {
+        ...state,
+        favoriteMovies: action.payload.movies,
         inProgress: false
       };
     case "LOGIN":

@@ -8,6 +8,10 @@ const mapDispatchToProps = dispatch => ({
   newMovies: movies => dispatch({ type: "NEW_MOVIES", payload: movies })
 });
 
+const mapStateToProps = state => ({
+  movies: state.common.movies
+});
+
 class Movies extends Component {
   componentWillReceiveProps() {
     // fires when component is receiving new props
@@ -26,8 +30,15 @@ class Movies extends Component {
     this.props.history.push(`/movies/${movieId}`);
   };
   render() {
-    return <MovieCards openMovieClicked={this.openMovieClicked} />;
+    return (
+      <div>
+        <MovieCards
+          movies={this.props.movies}
+          openMovieClicked={this.openMovieClicked}
+        />
+      </div>
+    );
   }
 }
 
-export default connect(null, mapDispatchToProps)(Movies);
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

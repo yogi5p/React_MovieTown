@@ -75,23 +75,15 @@ class NavBar extends Component {
                   type="input"
                   value={this.props.typeOfMovies}
                   onChange={event => {
+                    this.props.setSearchTerm(event.target.value);
+                  }}
+                  onKeyPress={event => {
                     if (event.key === "Enter") {
-                      () => this.props.movieSearchTerm();
-                    } else {
-                      this.props.setSearchTerm(event.target.value);
+                      this.props.movieSearchTerm();
                     }
                   }}
                 />
               </InputGroup>
-              {/* <input
-                className="searchMovieText"
-                type="input"
-                placeholder="movie search"
-                value={this.props.typeOfMovies}
-                onChange={event => {
-                  this.props.setSearchTerm(event.target.value);
-                }}
-              /> */}
               <Nav pullRight>
                 <Button
                   bsStyle="link"
