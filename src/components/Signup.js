@@ -20,22 +20,24 @@ import { connect } from "react-redux";
 import services from "../services";
 
 const mapDispatchToProps = dispatch => ({
-  login: (useremail, password) =>
+  register: (username, useremail, password) =>
     dispatch({
-      type: "LOGIN",
-      payload: services.User.login(useremail, password)
+      type: "REGISTER",
+      payload: services.User.register(username, useremail, password)
     })
 });
 
-class Login extends Component {
+class Signup extends Component {
   state = {
+    username: "",
     useremail: "",
-    password: ""
+    password: "",
+    confirmpassword: ""
   };
 
   validateForm() {
     if (this.state.useremail.length > 0 && this.state.password.length > 0)
-      return true;
+      return this.state.confirmpassword == this.state.password;
   }
 
   handleChange = event => {
@@ -46,7 +48,11 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.login(this.state.useremail, this.state.password);
+    this.props.register(
+      this.state.username,
+      this.state.useremail,
+      this.state.password
+    );
   };
 
   componentWillReceiveProps() {
@@ -65,8 +71,20 @@ class Login extends Component {
             <FormGroup>
               <Col sm={10}>
                 <ControlLabel>
-                  Login to keep a list of movies of your choice:
+                  Signup to keep a list of movies of your choice:
                 </ControlLabel>
+              </Col>
+              <Col sm={10}>
+                <ControlLabel>Username : </ControlLabel>
+                <FormControl
+                  autoFocus
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter text"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
               </Col>
               <Col sm={10}>
                 <ControlLabel>Email address : </ControlLabel>
@@ -90,8 +108,19 @@ class Login extends Component {
                   onChange={this.handleChange}
                 />
               </Col>
+              <Col sm={10}>
+                <ControlLabel>Confirm Password : </ControlLabel>
+                <FormControl
+                  type="confirmpassword"
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  placeholder="Confirm password"
+                  value={this.state.confirmpassword}
+                  onChange={this.handleChange}
+                />
+              </Col>
             </FormGroup>
-            <Button type="submit" disabled={!this.validateForm()}>
+            <Button type="submit" disable={!this.validateForm()}>
               Submit
             </Button>
           </Form>
@@ -101,4 +130,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Signup);

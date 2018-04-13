@@ -12,7 +12,24 @@ const Movie = {
     return fetch(
       `${MOVIE_BASE_URL}/search/movie?api_key=2434d246ec60c162a86db597467ef4ed&language=en-US&query=${uriEncoded}&include_adult=false&sort_by=created_at.asc&page=1`
     );
-  }
+  },
+  favorite: (movie, userToken) =>
+    fetch(API_URL + "movies", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userToken
+      },
+      body: JSON.stringify({
+        movie: {
+          movie_id: movie.id,
+          poster_path: movie.poster_path,
+          title: movie.title,
+          overview: movie.overview
+        }
+      })
+    })
 };
 
 const User = {
@@ -27,6 +44,21 @@ const User = {
         user: {
           email: "meow@pants.com",
           password: "password18"
+        }
+      })
+    }),
+  register: (username, email, password) =>
+    fetch(API_URL + "users", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          username: username,
+          email: email,
+          password: password
         }
       })
     })

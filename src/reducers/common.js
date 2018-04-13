@@ -1,6 +1,9 @@
 const initalState = {
   movies: [],
-  typeOfMovies: ""
+  typeOfMovies: "",
+  userAuthenticated: false,
+  user: null,
+  token: null
 };
 
 export const common = (state = initalState, action) => {
@@ -12,10 +15,14 @@ export const common = (state = initalState, action) => {
         inProgress: false
       };
     case "LOGIN":
+    case "REGISTER":
       return {
         ...state,
-        user: action.payload.results,
-        inProgress: false
+        user: action.payload.user,
+        token: action.payload.user.token,
+        isAuthenticated: action.payload.user ? true : false,
+        inProgress: false,
+        redirect: "/"
       };
     case "CREATE_SEARCH_TERM":
       return {
@@ -27,7 +34,11 @@ export const common = (state = initalState, action) => {
         ...state,
         inProgress: true
       };
-
+    case "REDIRECT":
+      return {
+        ...state,
+        redirect: action.payload
+      };
     default:
       return state;
   }
